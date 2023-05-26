@@ -16,10 +16,12 @@ return new class extends Migration
             $table->integer('round_count');
             $table->unsignedBigInteger('game_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('character_id');
             $table->timestamps();
 
             $table->foreign('game_id')->on('games')->references('id');
             $table->foreign('user_id')->on('users')->references('id');
+            $table->foreign('character_id')->on('characters')->references('id');
         });
     }
 
