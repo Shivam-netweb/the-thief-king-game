@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static $authenticationRules = [
+        'username' => 'required|string|regex:/[A-za-z0-9.-_!@  ]+/',
+        'password' => 'required|string'
+    ];
 }
