@@ -15,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'api/v1'],function(){
+Route::group(['prefix' => 'v1'],function(){
     # public routes
     Route::group(['module' => 'authRoutes'],function(){
         Route::post('login',[UserController::class, 'loginUser']);
+        Route::post('register',[UserController::class, 'registerUser']);
+        Route::post('/auth/{id}/generate-token',[UserController::class, 'generateToken']);
+    });
+
+    Route::group(['module' => 'privateRoutes','middleware' => 'auth:sanctum'], function(){
+        Route::post('new-game', [UserController::class, 'startNewGame']);
     });
 });
 

@@ -1,21 +1,22 @@
 import { Navigate, Outlet } from "react-router-dom";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import Home from "../pages/Home/Index";
 const router = (isLoggedIn) => [
-    // {// Private Routes
-    //     path: '/',
-    //     element: isLoggedIn ? <Outlet /> : <Navigate to="/login" />,
-    //     children: [
-    //         {
-    //             path:'/',
-    //             element: <Home />
-    //         },
-    //         {
-    //             path: '/me',
-    //             element: <Profile />
-    //         }
-    //     ]
-    // },
+    {// Private Routes
+        path: '/',
+        element: isLoggedIn ? <Outlet /> : <Navigate to="/login" />,
+        children: [
+            {
+                path:'/',
+                element: <Home />
+            },
+            // {
+            //     path: '/me',
+            //     element: <Profile />
+            // }
+        ]
+    },
     {
         path: '/',
         element: !isLoggedIn ? <Outlet /> : <Navigate to="/" />,

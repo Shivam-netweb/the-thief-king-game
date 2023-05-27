@@ -11,8 +11,7 @@ abstract class BaseService{
         if(method_exists($this, 'prepareRequest')){
             $prepared = $this->prepareRequest($validated);
         }
-
-        return $id ? $this->repo->store($prepared) : $this->repo->update($prepared, $id);
+        return !$id ? $this->repo->store($prepared) : $this->repo->update($prepared, $id);
     }
 
     public function delete($id)

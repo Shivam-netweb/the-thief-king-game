@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,7 +20,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'user_name',
+        'phone',
+        'profile',
         'email',
         'password',
     ];
@@ -43,8 +49,36 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * Authentication rules for the user so that not to explode the query in database
+     *
+     * @var array<string, string>
+     */
     public static $authenticationRules = [
         'username' => 'required|string|regex:/[A-za-z0-9.-_!@  ]+/',
         'password' => 'required|string'
     ];
+
+    /**
+     *
+     * Registeration Rules to restrict user not to add wrong things in inputs
+     *
+     * @var array<string, string>
+     */
+    public static $registerationRules = [
+        'first_name' => 'required|string|regex:/[A-za-z ]+/',
+        'last_name' => 'required|string|regex:/[A-za-z ]+/',
+        'user_name' => 'nullable|string|regex:/[A-za-z0-9.-_&*%$#@!() ]+/',
+        'phone' => 'nullable|numeric',
+        'profile' => 'nullable|image',
+        'email' => 'required|string|regex:/[A-za-z0-9.-_!@  ]+/',
+        'password' => 'required|string|regex:/[A-za-z0-9.-_&*%$#@!() ]+/|confirmed',
+    ];
+
+    public function name() : Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->first_name .' ' .$this->last_name
+        );
+    }
 }

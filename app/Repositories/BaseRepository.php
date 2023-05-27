@@ -44,12 +44,12 @@ class BaseRepository{
         }
     }
 
-    public function message($message, $statusCode = 200, $statusText = 'success', $error = null)
+    public function message($message, $statusCode = 200, $statusText = 'success', $error = null,$addOn = [])
     {
         return response(array_merge([
             'message' => $message,
             'status' => $statusCode,
             'type' => $statusText
-        ], $error ? ['error' => $error] : []), $statusCode);
+        ], ($error ? ['error' => $error] : []), ($addOn ? $addOn : [])), $statusCode);
     }
 }
