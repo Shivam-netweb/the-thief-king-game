@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PlaygroundEvent;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,10 @@ Route::group(['prefix' => 'v1'],function(){
 
     Route::group(['module' => 'privateRoutes','middleware' => 'auth:sanctum'], function(){
         Route::post('new-game', [UserController::class, 'startNewGame']);
+    });
+
+    Route::get('/event',function(){
+        event(new PlaygroundEvent);
     });
 });
 

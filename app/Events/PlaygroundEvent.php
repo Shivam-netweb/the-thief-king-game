@@ -30,7 +30,14 @@ class PlaygroundEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('protected'),
+            new Channel('protected.playgroud.game'),
         ];
     }
+
+    public function broadcastAs()
+    {
+        return "Playground";
+    }
+
+
 }
